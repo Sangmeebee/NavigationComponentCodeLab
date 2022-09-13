@@ -36,9 +36,9 @@ import androidx.navigation.fragment.findNavController
  */
 class DeepLinkFragment : Fragment() {
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View? {
         return inflater.inflate(R.layout.deeplink_fragment, container, false)
     }
@@ -56,24 +56,24 @@ class DeepLinkFragment : Fragment() {
             args.putString("myarg", editArgs.getText().toString())
 
             val deeplink = findNavController().createDeepLink()
-                    .setDestination(R.id.deeplink_dest)
-                    .setArguments(args)
-                    .createPendingIntent()
+                .setDestination(R.id.deeplink_dest)
+                .setArguments(args)
+                .createPendingIntent()
 
             val notificationManager =
-                    context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 notificationManager.createNotificationChannel(NotificationChannel(
-                        "deeplink", "Deep Links", NotificationManager.IMPORTANCE_HIGH))
+                    "deeplink", "Deep Links", NotificationManager.IMPORTANCE_HIGH))
             }
 
             val builder = NotificationCompat.Builder(
-                    context!!, "deeplink")
-                    .setContentTitle("Navigation")
-                    .setContentText("Deep link to Android")
-                    .setSmallIcon(R.drawable.ic_android)
-                    .setContentIntent(deeplink)
-                    .setAutoCancel(true)
+                context!!, "deeplink")
+                .setContentTitle("Navigation")
+                .setContentText("Deep link to Android")
+                .setSmallIcon(R.drawable.ic_android)
+                .setContentIntent(deeplink)
+                .setAutoCancel(true)
             notificationManager.notify(0, builder.build())
         }
     }
